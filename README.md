@@ -24,25 +24,24 @@ Note: happy-dom is a JS implementation of a web browser without its graphical us
    afterEach(() => {  cleanup(); });
    ```
 
-8. add test object in vite.config.js
+7. add test object in vite.config.js
    ```
    test: {
     globals: true,
     environment: 'happy-dom',
     setupFiles: './testSetup.js',
     reporters: 'verbose'
-  },
-  ```
+   }```
    
-9. create a test file e.g. App.test.jsx
-10. a non-render test example
+8. create a test file e.g. App.test.jsx
+9. a non-render test example
 - `describe` test suite
 - `test` or `it` test case
 - `expect` assertion
 
-11. npm run test
-12. more non-render test examples
-13. some render test examples
+10. npm run test
+11. more non-render test examples
+12. some render test examples
 - import render, screen
 - render(<App />)
 - screen.debug()
