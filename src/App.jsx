@@ -1,11 +1,25 @@
-import "./App.css";
+import './App.css'
+import {useState} from 'react';
 
-function App() {
+export default function App() {  
+  const [name, setName] = useState('');
+  const [count, setCount] = useState(0);
+
   return (
-    <>
-      <main>hello world</main>
-    </>
-  );
-}
+    <div>
+      
+      <div>hello world</div>
 
-export default App;
+      <div>
+        <input placeholder="enter name for a special greeting" onChange={(e)=>{setName(e.target.value);}}/>
+      </div>
+
+      <div>{name ? `HOWDY ${name.toUpperCase()}!!` : ''}</div>
+
+      <div>
+        <button onClick={ ()=>{ setCount(count + 1);} }>{`counter:${count}`}</button>
+      </div>
+      
+    </div>
+  )
+}
