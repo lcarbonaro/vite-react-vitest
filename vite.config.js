@@ -7,7 +7,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'happy-dom',
-    setupFiles: './testSetup.js',
+    setupFiles: './setupTests.js',
     reporters: 'verbose'
   },
 })

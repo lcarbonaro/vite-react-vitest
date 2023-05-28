@@ -1,3 +1,4 @@
+import { toHaveTextContent } from '@testing-library/jest-dom/matchers';
 import App from './App';
 import { render, screen, fireEvent } from '@testing-library/react';
 
@@ -5,8 +6,9 @@ import { render, screen, fireEvent } from '@testing-library/react';
 describe('App component test suite', () => {
 
   // test case
+  // can use .skip or .only 
   it('should return true', () => {
-    // assertion
+    // assertion and matcher
     expect(1 === 1).toBe(true);
   });
 
@@ -17,31 +19,47 @@ describe('App component test suite', () => {
 
   it('shows hello world', () => {
     render(<App />);
-    screen.debug();
-    expect(screen.getByText(/hello world/)).toBeTruthy();
+    //screen.debug();
+    expect(screen.getByText('hello world')).toBeInTheDocument();
   });
 
   it('has an input field', () => {
-    render(<App />);
-    //screen.debug();
-    expect(screen.getByRole('textbox')).toBeTruthy();
+    render(<App />);    
+    expect(screen.getByRole('textbox')).toBeInTheDocument();
   });
 
   it('responds with greeting', () => {
     render(<App />);
-    expect(screen.queryByText(/HOWDY JUST TESTING/)).toBeNull();
+    expect(screen.queryByText(/HOWDY JUST TESTING/)).not.toBeInTheDocument();
     fireEvent.change(screen.getByRole('textbox'), {
       target: { value: 'just testing' },
     });
-    expect(screen.queryByText(/HOWDY JUST TESTING/)).not.toBeNull();
+    expect(screen.queryByText(/HOWDY JUST TESTING/)).toBeInTheDocument();
   });
 
+  test('that button is in dom', ()=>{
+    render(<App />);    
+    const btn = screen.getByRole('button');
+    expect(btn).toBeInTheDocument();
+    expect(btn).toBeEnabled();    
+  });
 
-  test('that button increments counter by 1', ()=>{
+  test('that button click increments counter by 1', ()=>{
     render(<App />);
-    expect(screen.getByText(/counter:0/)).toBeTruthy();
+    const btn = screen.getByRole('button');
+    expect(btn).toHaveTextContent(/counter:0/i);    
     fireEvent.click(screen.getByRole('button'));
-    expect(screen.getByText(/counter:1/)).toBeTruthy();
+    expect(btn).toHaveTextContent(/counter:1/i);
+  });
+
+  test('that button click increments counter by 1 (queryBy)', ()=>{
+    render(<App />);
+    const btn0 = screen.queryByRole('button',{name:"counter:0"});
+    expect(btn0).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button'));
+    const btn1 = screen.queryByRole('button',{name:"counter:1"});
+    expect(btn1).toBeInTheDocument();
+    
   });
 
 });

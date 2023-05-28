@@ -9,6 +9,7 @@
 4. npm install --save-dev 
 - vitest 
 - @testing-library/react 
+- @testing-library/jest-dom
 - happy-dom
 
 Note: happy-dom is a JS implementation of a web browser without its graphical user interface.
@@ -16,10 +17,13 @@ Note: happy-dom is a JS implementation of a web browser without its graphical us
 5. add test script in package.json
 - `"test":"vitest"`
 
-6. add testSetup.js
+6. add setupTests.js
    ```
    import { afterEach } from 'vitest';
    import { cleanup } from '@testing-library/react';
+   import matchers from '@testing-library/jest-dom/matchers';
+   // extends Vitest's expect method with methods from react-testing-library
+   expect.extend(matchers);
    // runs a cleanup after each test case (e.g. clearing happy-dom)
    afterEach(() => {  cleanup(); });
    ```
@@ -29,7 +33,7 @@ Note: happy-dom is a JS implementation of a web browser without its graphical us
    test: {
     globals: true,
     environment: 'happy-dom',
-    setupFiles: './testSetup.js',
+    setupFiles: './setupTests.js',
     reporters: 'verbose'
    }```
    
@@ -52,6 +56,8 @@ Note: happy-dom is a JS implementation of a web browser without its graphical us
 
 
 ### References
-- [Article by Robin Wieruch](https://www.robinwieruch.de/react-testing-library/)
-- [testing-library docs](https://testing-library.com/docs/)
-- [vitest docs](https://vitest.dev/api/expect.html)
+- [Article by Robin Wieruch](https://www.robinwieruch.de/vitest-react-testing-library/)
+- [@testing-library docs](https://testing-library.com/docs/)
+- [Vitest docs](https://vitest.dev/api/expect.html)
+- [Matchers](https://github.com/testing-library/jest-dom)
+- [Testing Playground](https://testing-playground.com/)
