@@ -1,5 +1,3 @@
-# This example is still a WIP
-
 ## Vite + React + Vitest
 
 ### Set-up
